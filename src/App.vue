@@ -1,9 +1,13 @@
-<script setup>
-</script>
-
 <template>
-  <div> Hello Vue3</div>
+  <div>
+
+  </div>
 </template>
 
-<style>
+<script setup>
+
+</script>
+
+<style lang="scss" scoped>
+
 </style>
