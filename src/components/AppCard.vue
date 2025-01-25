@@ -1,28 +1,66 @@
 <script setup>
-import { ref, useCssModule } from 'vue'
-//  const cssModule = useCssModule();
-  const color = ref("red");
+import { computed } from 'vue'
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  contents: {
+    type: String,
+    required: true,
+  },
+  type:{
+    type: String,
+    default: "news",
+    validator: (value) => {
+      return ['news', 'notice'].includes(value);
+    }
+  },
+  isLike:{
+    type: Boolean,
+    default: false,
+  },
+  obj:{
+    type : Object,
+    default : () => {
+      return {}
+
+    }
+  }
+},);
+const isLikeClass = computed(() =>
+  props.isLike ? "btn-danger" : "btn-outline-danger"
+) ;
+const typeName = computed(() =>
+  props.type === 'news' ? "News" : "Notice"
+);
+
+// 이벤트 정의
+const emit = defineEmits(['toggleLike']);
+const toggleLike = () =>{
+  emit("toggleLike");
+}
 </script>
 
 <template>
   <div class="card">
     <div class="card-body">
-<!--      {{classes}}-->
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text" :class="classes">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <!-- Type : new, notice -->
+<!--      {{}} print String -->
+<!--      :class="" print JS code-->
+
+<!--      <span class="badge bg-secondary">{{type === 'news' ? "News" : "Notice"}}</span>-->
+      <span class="badge bg-secondary">{{typeName}}</span>
+      <h5 class="card-title mt-2">{{props.title}}</h5>
+      <p class="card-text">{{props.contents}}</p>
+<!--      <a v-if="isLike" href="#" class="btn" :class="isLikeClass">Like</a>-->
+<!--      <a v-else href="#" class="btn" :class="isLikeClass">Like</a>-->
+
+      <a href="#" class="btn" :class="isLikeClass" @click.prevent="toggleLike">Like</a>
     </div>
   </div>
 </template>
 
-<!--<style scoped>-->
-<!--  .red{-->
-<!--    color: red;-->
-<!--  }-->
-<!--</style>-->
-
 <style module="classes">
-.red{
-  color: v-bind(color) !important;
-}
 </style>
