@@ -1,6 +1,10 @@
 <script setup>
   import AppCard from '@/components/AppCard.vue'
-  import { reactive } from 'vue'
+  import PostCreate from '@/components/PostCreate.vue'
+  import { reactive, ref } from 'vue'
+
+  const username = ref('');
+
   const posts = reactive([
       {
         id : 1,
@@ -39,11 +43,20 @@
       },
     ]
   )
+  // const createPost = (a, b, c, d) =>{
+  //   console.log('createPost', a, b, c, d);
+  // }
+  const createPost = (newPost) =>{
+    console.log('createPost',newPost);
+    posts.push(newPost);
+  }
 </script>
 
 <template>
   <main>
     <div class="container py-4">
+      <PostCreate @create-post="createPost">  </PostCreate>
+      <hr class="my-4">
       <div class="row g-3">
         <div v-for="post in posts" :key="post.id" class="col col-4">
           <AppCard
@@ -54,9 +67,14 @@
             @toggleLike="post.isLike = !post.isLike"
           ></AppCard>
 <!--          <button @click="post.isLike = !post.isLike"> Toggle </button>-->
-
         </div>
       </div>
+
+      <hr class="my-4">
+      <label>
+        Name
+        <input v-model="username" type ="text"/>
+      </label>
     </div>
   </main>
 </template>
