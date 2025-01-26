@@ -1,66 +1,34 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  contents: {
-    type: String,
-//    required: true,
-  },
-  type:{
-    type: String,
-    default: "news",
-    validator: (value) => {
-      return ['news', 'notice'].includes(value);
-    }
-  },
-  isLike:{
-    type: Boolean,
-    default: false,
-  },
-  obj:{
-    type : Object,
-    default : () => {
-      return {}
+  const childMsg = ref('Child Msg');
 
-    }
-  }
-},);
-const isLikeClass = computed(() =>
-  props.isLike ? "btn-danger" : "btn-outline-danger"
-) ;
-const typeName = computed(() =>
-  props.type === 'news' ? "News" : "Notice"
-);
+  const slots = useSlots();
+  const hasFooter = computed(() => !!slots.footer);
 
-// 이벤트 정의
-const emit = defineEmits(['toggleLike']);
-const toggleLike = () =>{
-  emit("toggleLike");
-}
 </script>
 
 <template>
-  <div class="card">
-    <div class="card-body">
-      <!-- Type : new, notice -->
-<!--      {{}} print String -->
-<!--      :class="" print JS code-->
-
-<!--      <span class="badge bg-secondary">{{type === 'news' ? "News" : "Notice"}}</span>-->
-      <span class="badge bg-secondary">{{typeName}}</span>
-      <h5 class="card-title mt-2">{{props.title}}</h5>
-      <p class="card-text">{{props.contents}}</p>
-<!--      <a v-if="isLike" href="#" class="btn" :class="isLikeClass">Like</a>-->
-<!--      <a v-else href="#" class="btn" :class="isLikeClass">Like</a>-->
-
-      <a href="#" class="btn" :class="isLikeClass" @click.prevent="toggleLike">Like</a>
+  <div>
+    <div class="card">
+      <div v-if="$slots.header" class="card-header">
+        <slot name="header" header-Msg="Child Header Msg."> #Header</slot>
+      </div>
+      <div v-if="$slots.default" class="card-body">
+        <slot :child-msg="childMsg" hello-msg="Hi">#Body</slot>
+      </div>
     </div>
   </div>
+
+<!--  <div v-if="$slots.footer" class="card-footer text-body-secondary">-->
+<!--    <slot name="footer" footerMsg="Child Footer Msg.">#Footer</slot>-->
+<!--  </div>-->
+  <div v-if="hasFooter" class="card-footer text-body-secondary">
+    <slot name="footer" footerMsg="Child Footer Msg.">#Footer</slot>
+  </div>
+
 </template>
 
-<style module="classes">
+<style scoped lang="scss">
+
 </style>

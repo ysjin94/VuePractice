@@ -1,5 +1,5 @@
 <script setup>
-  import AppCard from '@/components/AppCard.vue'
+  import AppCard from '@/components/PostItem.vue'
   import PostCreate from '@/components/PostCreate.vue'
   import LabelInput from '@/components/LabelInput.vue'
   import LabelITitle from '@/components/LabelITitle.vue'
