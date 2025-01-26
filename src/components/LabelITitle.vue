@@ -7,29 +7,34 @@
       type: String,
 //      required: true,
     },
+    title: {
+      type: String,
+    },
     label: {
       type: String,
-//      required: true,
     },
   });
 
   // Emits 정의 (부모로 데이터 업데이트)
-  const emit = defineEmits(['update:username']);
+  const emit = defineEmits(['update:username', 'update:title']);
 
   // 로컬 상태와 props 연결
   const localUsername = computed({
     get: () => props.username, // props 값 읽기
     set: (value) => emit('update:username', value), // 부모로 값 전달
   });
+
+  const localTitle = computed({
+    get: () => props.title, // props.title 값 읽기
+    set: (value) => emit('update:title', value), // 부모로 값 전달
+  });
 </script>
 
 <template>
-  <label class="form-label"
-         id = 'childId'
-    >
+  <label>
     {{label}}
+    <input v-model="localTitle" type ="text"/>
   </label>
-  <input v-model="localUsername" type ="text" class="form-control" v-bind="$attrs"/>
 </template>
 
 <style scoped lang="scss">

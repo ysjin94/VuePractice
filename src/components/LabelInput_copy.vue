@@ -24,12 +24,13 @@
 </script>
 
 <template>
-  <label class="form-label"
+  <label class="child-class"
+         style="border: 1px solid black"
          id = 'childId'
     >
     {{label}}
+    <input v-model="localUsername" type ="text"/>
   </label>
-  <input v-model="localUsername" type ="text" class="form-control" v-bind="$attrs"/>
 </template>
 
 <style scoped lang="scss">
