@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <ProvideInject></ProvideInject>
-  </div>
+  <main>
+    <LifecycleHook></LifecycleHook>
+  </main>
 </template>
 
 <script setup>
-
-import ProvideInject from '@/components/ProvideInject.vue'
+import LifecycleHook from '@/components/LifecycleHook.vue'
 </script>
 
 <style lang="scss" scoped>
